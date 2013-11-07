@@ -1,0 +1,85 @@
+<html>
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+<script type="text/javascript">
+
+var imgs=['Test_AFS5018G-023.jpg', 'Test_AFS5018G-044.jpg',
+'Test_AFS5018G-001.jpg', 'Test_AFS5018G-024.jpg', 'Test_AFS5018G-045.jpg',
+'Test_AFS5018G-002.jpg', 'Test_AFS5018G-025.jpg', 'Test_AFS5018G-046.jpg',
+'Test_AFS5018G-003.jpg', 'Test_AFS5018G-026.jpg', 'Test_AFS5018G-047.jpg',
+'Test_AFS5018G-004.jpg', 'Test_AFS5018G-027.jpg', 'Test_AFS5018G-048.jpg',
+'Test_AFS5018G-005.jpg', 'Test_AFS5018G-028.jpg', 'Test_AFS5018G-049.jpg',
+'Test_AFS5018G-006.jpg', 'Test_AFS5018G-029.jpg', 'Test_AFS5018G-050.jpg',
+'Test_AFS5018G-007.jpg', 'Test_AFS5018G-030.jpg', 'Test_AFS5018G-051.jpg',
+'Test_AFS5018G-008.jpg', 'Test_AFS5018G-031.jpg', 'Test_AFS5018G-052.jpg',
+'Test_AFS5018G-009.jpg', 'Test_AFS5018G-032.jpg', 'Test_AFS5018G-053.jpg',
+'Test_AFS5018G-010.jpg', 'Test_AFS5018G-033.jpg', 'Test_AFS5018G-054.jpg',
+'Test_AFS5018G-011.jpg', 'Test_AFS5018G-034.jpg', 'Test_AFS5018G-055.jpg',
+'Test_AFS5018G-012.jpg', 'Test_AFS5018G-035.jpg', 'Test_AFS5018G-056.jpg',
+'Test_AFS5018G-013.jpg', 'Test_AFS5018G-036.jpg', 'Test_AFS5018G-057.jpg',
+'Test_AFS5018G-014.jpg', 'Test_AFS5018G-037.jpg', 'Test_AFS5018G-058.jpg',
+'Test_AFS5018G-015.jpg', 'Test_AFS5018G-038.jpg', 'Test_AFS5018G-059.jpg',
+'Test_AFS5018G-016.jpg', 'Test_AFS5018G-039.jpg', 'Test_AFS5018G-060.jpg',
+'Test_AFS5018G-017.jpg', 'Test_AFS5018G-040.jpg', 'Test_AFS5018G-061.jpg',
+'Test_AFS5018G-018.jpg', 'Test_AFS5018G-041.jpg', 'Test_AFS5018G-062.jpg',
+'Test_AFS5018G-019.jpg', 'Test_AFS5018G-042.jpg', 'Test_AFS5018G-063.jpg',
+'Test_AFS5018G-020.jpg', 'Test_AFS5018G-043.jpg', 'Test_AFS5018G-064.jpg'];
+
+var votes= [];
+var nvotes=[];
+var currentImg;
+
+for(var i = 0 ; i < imgs.length ; i++){
+	votes.push(0);
+	nvotes.push(0);
+}
+
+
+function randomize(){
+	rnd = Math.floor(Math.random()*imgs.length);
+	jQuery("#toDisplay").attr("src", imgs[rnd]);
+	currentImg = rnd;
+
+	// also construct result
+	var results = "<table><tr><th>img</th><th>note</th><th>nbvotes</th></tr>"
+	for(var i = 0 ; i < imgs.length ; i++){
+		results+="<tr>"
+		results+="<td>"+imgs[i].substring(14,17)+"</td>"
+		results+="<td>"+votes[i]+"</td>"
+		results+="<td>"+nvotes[i]+"</td>"
+		results+="</tr>"
+	}
+	results+="</table>"
+	jQuery("#results").html(results)
+}
+
+jQuery(document).ready(function(){
+	jQuery("body").keyup(function(e){
+		var number = e.keyCode - 96;
+		if(number < 0 || number > 9){
+			return;
+		}
+		votes[currentImg]+=number
+		nvotes[currentImg]+=1;
+		randomize();
+		console.log(votes);
+		console.log(nvotes);
+	});
+
+	randomize();
+});
+
+
+</script>
+
+<body>
+<h1>Put a note between 0 and 9 with your keyboard</h1>
+<img id="toDisplay"/>
+<div id="results"></div>
+</results>
+
+
+</body>
+
+</html>
